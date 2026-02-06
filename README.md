@@ -1,352 +1,318 @@
-# LINEAR ALGEBRA – COMPLETE RANKER MASTER NOTES
+# DATA LOADING, WRANGLING & VISUALISATION – COMPLETE RANKER NOTES
 
-## 1. Scalars, Vectors, Matrices
+## 1. What is Data Loading?
 
-* **Scalar**: single real number (ℝ)
-* **Vector**: ordered list of numbers (column vector by default)
-* **Matrix**: rectangular array of numbers
+**Data Loading** is the process of importing raw data from various sources into a working environment (Excel, Python, R, SQL, BI tools) for analysis.
 
-[
-\mathbf{x} =
-\begin{bmatrix}
-x_1\
-x_2\
-x_3
-\end{bmatrix},
-\quad
-A =
-\begin{bmatrix}
-a_{11} & a_{12}\
-a_{21} & a_{22}
-\end{bmatrix}
-]
+### Common Data Sources
+
+* CSV / TSV files
+* Excel (.xlsx)
+* Databases (SQL)
+* APIs
+* JSON / XML
+* Web scraping
+
+### Key Exam Insight
+
+> Data loading is about **access + correctness**, not analysis.
 
 ---
 
-## 2. Vector Operations (CORE)
+## 2. File Formats (VERY IMPORTANT)
 
-### Vector Addition
+### CSV (Comma-Separated Values)
 
-[
-\mathbf{a} + \mathbf{b} =
-\begin{bmatrix}
-a_1 + b_1\
-a_2 + b_2
-\end{bmatrix}
-]
+* Lightweight
+* No formatting
+* Most common in exams
 
-### Scalar Multiplication
+### Excel
 
-[
-c\mathbf{a} =
-\begin{bmatrix}
-ca_1\
-ca_2
-\end{bmatrix}
-]
+* Multiple sheets
+* Formatting + formulas
+* Slower for big data
 
-### Dot Product (VERY IMPORTANT)
+### JSON
 
-[
-\mathbf{a}\cdot\mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta
-]
+* Semi-structured
+* Used in APIs
 
-Uses:
+### SQL Tables
 
-* Angle between vectors
-* Orthogonality
-* Projections
-
-### Cross Product (3D only)
-
-* Gives vector perpendicular to both vectors
-* Magnitude = area of parallelogram
+* Structured
+* Query-based access
 
 ---
 
-## 3. Norm (Length of a Vector)
+## 3. Data Loading in Python (Conceptual)
 
-[
-|\mathbf{x}| = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}
-]
+### Using pandas
 
-Properties:
+* `read_csv()`
+* `read_excel()`
+* `read_sql()`
+* `read_json()`
 
-* Always ≥ 0
-* Zero **iff** vector = zero vector
+Key parameters:
 
----
+* `header`
+* `index_col`
+* `dtype`
+* `na_values`
 
-## 4. Linear Independence
-
-Vectors (\mathbf{v}_1, \mathbf{v}_2, \dots) are linearly independent if:
-[
-c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \dots = 0 \Rightarrow c_1=c_2=\dots=0
-]
-
-**Exam shortcut**:
-
-* Determinant ≠ 0 ⇒ independent
+**Ranker Tip**: Incorrect data types cause silent errors.
 
 ---
 
-## 5. Matrix Operations
+## 4. What is Data Wrangling?
 
-### Addition
+**Data Wrangling** = cleaning + transforming raw data into usable form.
 
-* Same order matrices only
+Also called:
 
-### Multiplication (NON‑COMMUTATIVE)
+* Data munging
+* Data preprocessing
 
-[
-AB \ne BA
-]
-
-Dimension rule:
-[
-(m\times n)(n\times p) = (m\times p)
-]
+> Real-world data is always dirty.
 
 ---
 
-## 6. Identity & Zero Matrix
+## 5. Types of Data Problems
 
-[
-I = \begin{bmatrix}1 & 0\0 & 1\end{bmatrix}
-]
+* Missing values
+* Duplicate rows
+* Inconsistent formats
+* Outliers
+* Wrong data types
+* Noise
 
-[
-AI = IA = A
-]
-
----
-
-## 7. Transpose
-
-[
-(A^T)*{ij} = A*{ji}
-]
-
-Key property:
-[
-(AB)^T = B^T A^T
-]
+Exams often ask **identify + fix**.
 
 ---
 
-## 8. Determinant (EXAM FAVORITE)
+## 6. Handling Missing Data (HIGH YIELD)
 
-For 2×2:
-[
-|A| = ad - bc
-]
+### Types
 
-Uses:
+* MCAR (Missing Completely at Random)
+* MAR (Missing at Random)
+* MNAR (Missing Not at Random)
 
-* Invertibility
-* Area / volume scaling
-* Linear independence
+### Methods
 
-**Ultra‑Topper Insights**:
+* Drop rows/columns
+* Mean / median / mode imputation
+* Forward / backward fill
+* Model-based imputation
 
-* det = 0 → rows lie in same plane
-* det < 0 → orientation reversal
-* |det| → scaling factor
+**Exam rule**:
 
----
-
-## 9. Inverse of a Matrix
-
-For 2×2:
-[
-A^{-1} = \frac{1}{|A|}
-\begin{bmatrix} d & -b\ -c & a \end{bmatrix}
-]
-
-Exists **only if** det(A) ≠ 0.
+* Mean → numerical, symmetric
+* Median → skewed data
+* Mode → categorical
 
 ---
 
-## 10. System of Linear Equations
+## 7. Handling Duplicates
 
-[
-AX = B
-]
+* Identify duplicates
+* Remove exact or conditional duplicates
 
-Cases:
+Impact:
 
-1. Unique solution → det(A) ≠ 0
-2. Infinite solutions
-3. No solution
-
-Methods:
-
-* Gaussian elimination
-* Inverse method
-* Cramer’s rule
-
-**Ranker move**: decide det ≠ 0 or det = 0 in first 10 seconds.
+* Bias in analysis
+* Inflated counts
 
 ---
 
-## 11. Rank of a Matrix
+## 8. Data Type Conversion
 
-* Number of linearly independent rows or columns
-* Rank ≤ min(rows, columns)
+Common conversions:
 
-Consistency condition:
-[
-\text{rank}(A) = \text{rank}([A|B])
-]
+* String → numeric
+* Date → datetime
+* Categorical → category
 
----
-
-## 12. Eigenvalues & Eigenvectors (HIGH YIELD)
-
-[
-A\mathbf{x} = \lambda\mathbf{x}
-]
-
-Steps:
-
-1. Solve (|A-\lambda I|=0)
-2. Find eigenvectors
-
-**Power results**:
-
-* Sum of eigenvalues = trace(A)
-* Product of eigenvalues = det(A)
-* Eigenvectors are not unique
+Errors here break visualisations.
 
 ---
 
-## 13. Orthogonality
+## 9. Outlier Detection
 
-[
-\mathbf{a}\cdot\mathbf{b} = 0
-]
+### Methods
 
-Orthogonal matrix:
-[
-Q^TQ = I
-]
+* IQR method
+* Z-score method
+* Boxplots
 
-Preserves length and angles.
+Options:
 
----
-
-## 14. Diagonalization
-
-[
-A = PDP^{-1}
-]
-
-Possible **iff** sufficient independent eigenvectors exist.
+* Remove
+* Cap (winsorization)
+* Transform
 
 ---
 
-## 15. Vector Spaces
+## 10. Data Transformation
 
-A set V is a vector space if:
+* Normalization (0–1 scale)
+* Standardization (mean=0, sd=1)
+* Log transformation
+* Encoding categorical variables
 
-* Closed under addition
-* Closed under scalar multiplication
-* Contains zero vector
+Used before:
+
+* Modelling
+* Comparison
+
+---
+
+## 11. Feature Engineering (TOPPER EDGE)
+
+Creating new variables from existing ones.
 
 Examples:
 
-* ℝⁿ
-* Polynomial spaces
-* Solution spaces
+* Age from DOB
+* GDP growth rate
+* Per-capita metrics
 
 ---
 
-## 16. Basis & Dimension
+## 12. What is Data Visualisation?
 
-* **Basis**: minimum spanning set
-* **Dimension**: number of basis vectors
+**Data Visualisation** is the graphical representation of data to communicate patterns, trends, and insights.
 
----
+Goal:
 
-## 17. Column Space, Row Space, Null Space
-
-* Column space → output directions
-* Row space → constraints
-* Null space → lost information
-
-**Rank–Nullity Theorem**:
-[
-\text{rank}(A) + \text{nullity}(A) = \text{number of columns}
-]
+> Insight > Decoration
 
 ---
 
-## 18. Geometric Interpretation (TOPPER EDGE)
+## 13. Types of Data & Charts
 
-* Vector → arrow
-* Matrix → linear transformation
-* Determinant → volume scaling
-* Eigenvector → unchanged direction
+### Numerical
 
----
+* Histogram
+* Boxplot
+* Line chart
 
-## 19. Exam Traps (VERY IMPORTANT)
+### Categorical
 
-❌ Assuming AB = BA
-❌ Forgetting det = 0 ⇒ no inverse
-❌ Mixing span and basis
-❌ Thinking eigenvectors are unique
-❌ Over‑reducing matrices unnecessarily
+* Bar chart
+* Pie chart (limited use)
 
----
+### Time Series
 
-## 20. Must‑Memorize Results (NO DERIVATION)
+* Line chart
+* Area chart
 
-* Rank(A) = Rank(Aᵀ)
-* Similar matrices have same eigenvalues
-* Row space ⟂ null space
-* Orthogonal matrices preserve norms
+### Relationship
+
+* Scatter plot
 
 ---
 
-## 21. High‑Yield Question Types
+## 14. Choosing the RIGHT Chart (EXAM GOLD)
 
-1. Rank depending on parameter k
-2. Eigenvalues of 2×2 / 3×3 matrix
-3. Inverse using adjoint
-4. Consistency of system
-5. Basis of null space
-6. Diagonalizability check
-7. Orthogonality verification
-8. Determinant geometry interpretation
+* Comparison → Bar chart
+* Trend over time → Line chart
+* Distribution → Histogram
+* Outliers → Boxplot
+* Relationship → Scatter plot
 
----
-
-## 22. One‑Line Ultra‑Revision Sheet
-
-* det ≠ 0 → invertible
-* rank → information
-* null space → freedom
-* eigen → scaling & stability
-* transpose → mirror
-* orthogonal → 90°
+Wrong chart = marks cut.
 
 ---
 
-## 23. Ranker Revision Strategy
+## 15. Visualisation Best Practices
 
-**Before exam**:
+* Clear title
+* Proper labels
+* Units mentioned
+* Avoid clutter
+* Consistent scales
 
-* Only formulas
-* Only traps
-* Only solved examples
-
-**In exam**:
-
-* Decide method instantly
-* Avoid brute force
-* Write clean final answers
+**Ranker rule**: If it needs explanation, chart is bad.
 
 ---
 
-### This document = FULL LINEAR ALGEBRA FIREPOWER
+## 16. Common Visualisation Mistakes
+
+❌ Too many colors
+❌ Misleading scales
+❌ 3D charts
+❌ Missing labels
+❌ Decorative charts
+
+---
+
+## 17. Tools for Visualisation
+
+### Excel
+
+* Fast
+* Exam-friendly
+
+### Python
+
+* Matplotlib
+* Seaborn
+
+### BI Tools
+
+* Power BI
+* Tableau
+
+---
+
+## 18. Storytelling with Data (ULTRA-TOPPER)
+
+Structure:
+
+1. Context
+2. Pattern
+3. Insight
+4. Implication
+
+Example:
+
+> "FDI inflows increased after 2000, indicating liberalisation impact."
+
+---
+
+## 19. Exam-Oriented Workflow (VERY IMPORTANT)
+
+1. Load data
+2. Inspect data
+3. Clean data
+4. Transform data
+5. Visualise
+6. Interpret
+
+Skipping steps loses marks.
+
+---
+
+## 20. One-Page Ultra-Revision Sheet
+
+* Load → access data
+* Wrangle → clean data
+* Visualise → explain data
+* Charts show patterns, not beauty
+* Wrong chart = wrong answer
+
+---
+
+## 21. Typical Exam Questions
+
+* Identify data issues
+* Choose correct chart
+* Explain trend from graph
+* Handle missing values
+* Interpret outliers
+
+---
+
+### THIS DOCUMENT = FULL DATA HANDLING FIREPOWER
